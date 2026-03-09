@@ -27,7 +27,7 @@
     <h2 class="mb-3">Resultados:</h2>
     
     {% if libros|length > 0 %}
-        <ul class="list-group">
+        <ol class="list-group">
             {% for libro in libros %}
                 <li class="list-group-item">
                     <div class="fw-bold">{{ libro.titulo }}</div>
@@ -44,7 +44,7 @@
                     {% endif %}
                 </li>
             {% endfor %}
-        </ul>
+        </ol>
     {% else %}
         <div class="alert alert-warning">No se encontraron libros</div>
     {% endif %}
