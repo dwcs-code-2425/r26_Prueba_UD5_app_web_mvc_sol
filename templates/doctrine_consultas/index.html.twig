@@ -7,12 +7,12 @@
 
 {% if error %}
     <div style="background:#fff3cd; border-left:6px solid #ffc107; padding:15px; border-radius:4px; margin-top:20px;">
-        ⚠️ Error: {{ error }}
+        Error: {{ error }}
     </div>
 
 {% elseif result is empty %}
     <div style="background:#e8f4fd; border-left:6px solid #3498db; padding:15px; border-radius:4px; margin-top:20px;">
-        ℹ️ No se encontraron resultados.
+        No se encontraron resultados.
     </div>
 
 {% else %}
@@ -59,7 +59,7 @@
         <tbody>
             {% for autor in result %}
                 {% set autor_obj = autor[0] is defined ? autor[0] : autor %}
-                {% set num_unidades_o_libros = autor.valor %}
+                {% set num_unidades_o_libros = autor.valor is defined ? autor.valor: 'N/A' %}
                 <tr>
                     <td style="padding:8px; border:1px solid #ccc;">{{ autor_obj.nombre }}</td>
                     <td style="padding:8px; border:1px solid #ccc;">{{ autor_obj.fechaNacimiento ? autor_obj.fechaNacimiento|date('Y-m-d') : 'N/A' }}</td>
