@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Libro;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Query\Parameter;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -165,14 +166,13 @@ class LibroRepository extends ServiceEntityRepository
             ->orderBy('l.titulo', 'ASC');
 
 
-        $qb->setParameter(
-            'id',
-            $id
-        )
-            ->setParameter(
-                'titulo',
-                '%' . $titulo . '%'
-            );
+        $qb->setParameters(
+            new ArrayCollection([
+                new Parameter('id', $id),
+                new Parameter('titulo', '%' . $titulo . '%')
+            ]
+            )
+        ); 
 
         return $qb->getQuery()->getResult();
     }
