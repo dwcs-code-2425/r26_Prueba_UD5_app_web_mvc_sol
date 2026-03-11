@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consultas de Notas{% endblock %}
+
+{% block body %}
+<h1>Consultas de Notas</h1>
+
+<h2>Nota con ID=1</h2>
+{% if nota1 %}
+    <p>{{ nota1.titulo }} - {{ nota1.descripcion }} ({{ nota1.fechaModificacion ? nota1.fechaModificacion|date('Y-m-d H:i') : 'N/A' }})</p>
+{% else %}
+    <p>No existe la nota con ID=1</p>
+{% endif %}
+
+<h2>Todas las notas</h2>
+<ol>
+{% for n in todasNotas %}
+    <li>{{ n.titulo }} - {{ n.descripcion }}</li>
+{% else %}
+    <li>No hay notas</li>
+{% endfor %}
+</ol>
+
+<h2>Notas con título "PHP Básico" (findBy)</h2>
+<ul>
+{% for n in notasPHP %}
+    <li>{{ n.titulo }} - {{ n.descripcion }}</li>
+{% else %}
+    <li>No hay notas</li>
+{% endfor %}
+</ul>
+
+<h2>Primera nota con título "PHP Básico" (findOneBy)</h2>
+{% if notaPHP %}
+    <p>{{ notaPHP.titulo }} - {{ notaPHP.descripcion }}</p>
+{% else %}
+    <p>No hay notas</p>
+{% endif %}
+
+<h2>Notas con título "Symfony" y descripción "Introducción" (findBy múltiples criterios)</h2>
+<ul>
+{% for n in notasRecientes %}
+    <li>{{ n.titulo }} - {{ n.descripcion }}</li>
+{% else %}
+    <li>No hay notas</li>
+{% endfor %}
+</ul>
+
+<h2>Últimas 5 notas ordenadas por fecha de modificación descendente</h2>
+<ul>
+{% for n in ultimasNotas %}
+    <li>{{ n.titulo }} - {{ n.descripcion }} ({{ n.fechaModificacion ? n.fechaModificacion|date('Y-m-d H:i') : 'N/A' }})</li>
+{% else %}
+    <li>No hay notas</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

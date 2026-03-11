@@ -40,4 +40,74 @@ class AutorRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    //Ejemplos de los contenidos
+    public function findAutoresDesdeFecha(\DateTimeInterface $fecha): array
+    {
+        $dql = "SELECT a 
+            FROM App\Entity\Autor a 
+            WHERE a.fechaNacimiento >= :fecha";
+
+        return $this->getEntityManager()->createQuery($dql)
+            ->setParameter('fecha', $fecha)
+            ->getResult();
+    }
+
+    public function findAutoresSuperVentas(int $min): array
+    {
+        $dql = "SELECT DISTINCT a, l.unidadesVendidas as valor
+        FROM App\Entity\Autor a
+        JOIN a.libros l
+        WHERE l.unidadesVendidas > :min";
+
+        return $this->getEntityManager()->createQuery($dql)
+            ->setParameter('min', $min)
+            ->getResult();
+
+    }
+
+    public function findAutoresYCountLibros(): array
+    {
+        $dql = "SELECT a, COUNT(l.id) as valor
+FROM App\Entity\Autor a
+JOIN a.libros l
+GROUP BY a.id";
+
+        return $this->getEntityManager()->createQuery($dql)->getResult();
+
+    }
+
+
+    public function findAutoresYCountLibrosGroupByQB(): array
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        $qb->select('a, COUNT(l.id) AS valor')
+            ->join('a.libros', 'l')
+            ->groupBy('a.id');
+
+        return $qb->getQuery()->getResult();
+
+
+    }
+ //En AutorRepository
+    public function findAutoresYCountLibrosSubconsultaByQB(): array
+    {
+        //Para poder generar una subconsulta de otra entidad dentro de un repositorio, hay que crear un nuevo QueryBuilder a través del EntityManager, y luego incluir su DQL dentro del QueryBuilder principal.
+        $subQuery = $this->getEntityManager()
+        ->createQueryBuilder()
+        ->select('l')
+            ->from('App\Entity\Libro', 'l')
+            ->select('COUNT(l.id)')
+            ->join('l.autores', 'a2')
+            ->where('a2 = a');
+
+        $qb = $this->createQueryBuilder('a')
+            //->select('a.id, a.nombre')
+            ->addSelect('(' . $subQuery->getDQL() . ') AS valor');
+
+      return $qb->getQuery()->getResult();
+
+
+    }
 }

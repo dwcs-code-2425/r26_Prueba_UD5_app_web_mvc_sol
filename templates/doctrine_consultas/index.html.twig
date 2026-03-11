@@ -1,0 +1,80 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<h1 style="color:#2c3e50;">Prueba dinámica de Doctrine</h1>
+<p>Entidad: <strong>{{ entity }}</strong> | Método: <strong>{{ method }}</strong> | Parámetro 1: <strong>{{ param1 }}</strong> | Parámetro 2: <strong>{{ param2 }}</strong></p>
+
+{% if error %}
+    <div style="background:#fff3cd; border-left:6px solid #ffc107; padding:15px; border-radius:4px; margin-top:20px;">
+        ⚠️ Error: {{ error }}
+    </div>
+
+{% elseif result is empty %}
+    <div style="background:#e8f4fd; border-left:6px solid #3498db; padding:15px; border-radius:4px; margin-top:20px;">
+        ℹ️ No se encontraron resultados.
+    </div>
+
+{% else %}
+    {% if result is iterable %}
+        {% if entity == 'libro' %}
+            <h2 style="color:#34495e; margin-top:30px;">Libros</h2>
+            <table style="width:100%; border-collapse:collapse; margin-top:15px;">
+                <thead>
+                    <tr style="background:#3498db; color:white;">
+                        <th style="padding:8px; border:1px solid #ccc;">Título</th>
+                        <th style="padding:8px; border:1px solid #ccc;">Unidades Vendidas</th>
+                        <th style="padding:8px; border:1px solid #ccc;">Editorial</th>
+                        <th style="padding:8px; border:1px solid #ccc;">Autores</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for libro in result %}
+                        <tr>
+                            <td style="padding:8px; border:1px solid #ccc;">{{ libro.titulo }}</td>
+                            <td style="padding:8px; border:1px solid #ccc;">{{ libro.unidadesVendidas }}</td>
+                            <td style="padding:8px; border:1px solid #ccc;">{{ libro.editorial ? libro.editorial.nombre : 'N/A' }}</td>
+                            <td style="padding:8px; border:1px solid #ccc;">
+                                {% if libro.autores|length > 0 %}
+                                    {{ libro.autores|map(a => a.nombre)|join(', ') }}
+                                {% else %}
+                                    Ninguno
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        {% elseif entity == 'autor' %}
+              <h2 style="color:#34495e; margin-top:30px;">Autores</h2>
+    <table style="width:100%; border-collapse:collapse; margin-top:15px;">
+        <thead>
+            <tr style="background:#3498db; color:white;">
+                <th style="padding:8px; border:1px solid #ccc;">Nombre</th>
+                <th style="padding:8px; border:1px solid #ccc;">Fecha Nacimiento</th>
+                <th style="padding:8px; border:1px solid #ccc;">Número de Libros o unidades</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for autor in result %}
+                {% set autor_obj = autor[0] is defined ? autor[0] : autor %}
+                {% set num_unidades_o_libros = autor.valor %}
+                <tr>
+                    <td style="padding:8px; border:1px solid #ccc;">{{ autor_obj.nombre }}</td>
+                    <td style="padding:8px; border:1px solid #ccc;">{{ autor_obj.fechaNacimiento ? autor_obj.fechaNacimiento|date('Y-m-d') : 'N/A' }}</td>
+                    <td style="padding:8px; border:1px solid #ccc;">{{ num_unidades_o_libros }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+            </table>
+        {% endif %}
+
+    {% else %}
+        {# Valor escalar (COUNT, SUM, etc.) #}
+        <p style="margin-top:20px;"><strong>Valor:</strong> {{ result }}</p>
+    {% endif %}
+{% endif %}
+
+{% endblock %}

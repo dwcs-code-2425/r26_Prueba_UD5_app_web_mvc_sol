@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consultas Biblioteca{% endblock %}
+
+{% block body %}
+<h1>Consultas Biblioteca</h1>
+
+<h2>1️ Todos los libros</h2>
+<ul>
+{% for libro in todosLibros %}
+    <li>{{ libro.titulo }} ({{ (libro.unidadesVendidas ?? 0) | number_format(0, ',', '.') }} ventas)</li>
+{% else %}
+    <li>No hay libros</li>
+{% endfor %}
+</ul>
+
+<hr>
+
+<h2>2️ Los 5 libros más vendidos</h2>
+<ul>
+{% for libro in masVendidos %}
+    <li>{{ libro.titulo }} - {{ libro.unidadesVendidas }}</li>
+{% else %}
+    <li>No hay resultados</li>
+{% endfor %}
+</ul>
+
+<hr>
+
+<h2>3️ Autor buscado</h2>
+{% if autor %}
+    <p><strong>{{ autor.nombre }}</strong></p>
+    <p>Libros:</p>
+    <ul>
+    {% for libro in autor.libros %}
+        <li>{{ libro.titulo }}</li>
+    {% else %}
+        <li>No tiene libros</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Autor no encontrado</p>
+{% endif %}
+
+<hr>
+
+<h2>4️ Libros de una editorial concreta</h2>
+{% if editorial %}
+    <p><strong>Editorial:</strong> {{ editorial.nombre }}</p>
+    <ul>
+    {% for libro in librosEditorial %}
+        <li>{{ libro.titulo }}</li>
+    {% else %}
+        <li>No tiene libros asociados</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Editorial no encontrada</p>
+{% endif %}
+
+{% endblock %}
