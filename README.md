@@ -48,4 +48,12 @@ Arranca el servidor local con:
 symfony server:start
 ```
 
+# Actividad 4.18
+
+ Cómo cambiar la configuración para que se redirija a otra ruta diferente de otro controlador. Indica en el README.md cómo has hecho.
+ En la guía hay un enlace a https://symfony.com/doc/7.4/reference/configuration/security.html#form-login-authentication
+ Concretamente https://symfony.com/doc/7.4/reference/configuration/security.html#default-target-path
+ Añadimos en security.yaml bajo form_login: 
+ default_target_path: consultas_biblioteca
+
 
