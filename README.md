@@ -56,4 +56,5 @@ symfony server:start
  Añadimos en security.yaml bajo form_login: 
  default_target_path: consultas_biblioteca
 
-
+Otra opción sería añadir en login.html.twig
+<input type="hidden"  name="_target_path" value="/consultas/notas">
