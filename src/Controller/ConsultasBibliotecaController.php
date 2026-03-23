@@ -8,10 +8,12 @@ use App\Repository\EditorialRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ConsultasBibliotecaController extends AbstractController
 {
     #[Route('/consultas/biblioteca', name: 'consultas_biblioteca')]
+    #[IsGranted('ROLE_USER')]
     public function index(
         LibroRepository $libroRepository,
         AutorRepository $autorRepository,
