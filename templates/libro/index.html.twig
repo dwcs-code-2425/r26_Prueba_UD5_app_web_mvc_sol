@@ -10,10 +10,64 @@
     {% endfor %}
 </ul>
 
+<div class="row">
+        <button id="btnLibros" type="button" class="col-5 btn btn-secondary mx-2">
+            Cargar libros del servicio web
+        </button>
+        <button id="btnCrearLibro" type="button" class=" col-5 btn btn-primary mx-2">
+            Crear nuevo libro
+        </button>
+    </div>
+    <div id="buzonMensajes" class="alert" style="display: none;" role="alert"></div>
+    <div id="divFormCrear" style="display: none;" class="mt-4 p-3 border rounded bg-light">
+        <h3>
+            Nuevo Libro
+        </h3>
+        <div id="contenedorErrores" class="alert alert-danger" style="display: none;">
+            <ul id="listaErrores" class="mb-0"></ul>
+        </div>
+        <form id="formLibro">
+            <div class="mb-3">
+                <label for="titulo" class="form-label">
+                    Título
+                </label>
+                <input type="text" id="titulo" class="form-control" required></div>
+                <textarea id="descripcion" class="form-control mb-3" placeholder="Descripción del libro" rows="3"></textarea>
+                <button type="submit" class="btn btn-success">
+                    Guardar en API
+                </button>
+                <button type="button" id="btnCancelar" class="btn btn-link">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </div> 
+   <div id="divListaLibrosApi" class="mt-4" style="display: none;">
+            <h2>
+                Listado de libros del API REST
+            </h2>
+            {# <ul id="listaLibrosApi"></ul> #}
+            <table class="table table-striped table-hover">
+                <thead class="table">
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Título
+                        </th>
+                        <th>
+                            Descripción
+                        </th>
+                        <th class="text-center">
+                            Acciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpoTablaLibros"></tbody>
+            </table>
+        </div>
+    
 
-
-
-    <button id="btnLibros" type="button" class="btn btn-secondary mx-2">  Cargar libros del servicio web</button>
-
-    <ul id="listaLibrosApi"></ul>
+   
 {% endblock %}

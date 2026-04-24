@@ -9,6 +9,6 @@ import './styles/app.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import './libros.js';
+import './js/libros.js';
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
