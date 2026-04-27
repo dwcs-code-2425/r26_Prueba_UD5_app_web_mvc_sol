@@ -64,10 +64,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 mostrarNotificacion('Ha ocurrido un error y no se ha podido crear el libro ' + mensaje, 'danger');
             })
     });
+
+    // Delegación de eventos en el cuerpo de la tabla
+
+    document.getElementById('cuerpoTablaLibros').addEventListener('click', (e) => {
+
+        if (e.target.classList.contains('btn-borrar')) {
+
+            const id = e.target.dataset.id;
+
+            const fila = e.target.closest('tr'); // Encuentra la fila (tr) más cercana al botón
+
+
+
+            if (confirm(`¿Estás seguro de eliminar el libro con ID ${id}?`)) {
+
+                eliminarLibro(id, fila);
+
+            }
+
+        }
+
+    });
 });
 
 
 // --- FUNCIONES DE UI ---
+
+function eliminarLibro(id, fila) {
+
+
+    apiCall(API_URL + '/' + id, "DELETE")
+        .then(libro => {
+            console.log(' éxito');
+            fila.remove();
+            mostrarNotificacion('Se ha eliminado con éxito el libro con id: ' + id);
+        })
+        .catch(error => {
+            console.error('error en catch: ' + error);
+            mostrarNotificacion('No se ha podido eliminar libro con id: ' + id, 'danger');
+        })
+
+
+
+
+}
 
 function mostrarLibros(libros) {
     const cuerpoTabla = document.getElementById('cuerpoTablaLibros');
@@ -80,6 +121,15 @@ function mostrarLibros(libros) {
             <td>${libro.id}</td>
             <td><strong>${libro.titulo}</strong></td>
             <td>${libro.descripcion || '<span class="text-muted">Sin descripción</span>'}</td>
+            <td class="text-center">
+
+                <button class="btn btn-danger btn-sm btn-borrar" data-id="${libro.id}">
+
+                    Eliminar
+
+                </button>
+
+            </td>
         `;
         cuerpoTabla.appendChild(fila);
     });
