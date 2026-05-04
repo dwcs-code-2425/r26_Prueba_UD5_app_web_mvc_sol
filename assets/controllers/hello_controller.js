@@ -10,7 +10,13 @@ import { Controller } from '@hotwired/stimulus';
  * Delete this file or adapt it for your use!
  */
 export default class extends Controller {
+    static targets = ["name"];
     connect() {
-        this.element.textContent = 'Hello Stimulus! Edit me in assets/controllers/hello_controller.js';
+      //  this.element.textContent = 'Hello Stimulus! Edit me in assets/controllers/hello_controller.js';
+      console.log('Connect in hello controlelr');
+    }
+
+    saludar(){
+        alert("Hola" + this.nameTarget.value);
     }
 }

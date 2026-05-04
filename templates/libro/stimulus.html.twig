@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listado de libros
+{% endblock %}
+
+{% block body %}
+	<h2>Listado de libros</h2>
+	<ul>
+		{% for libro in libros %}
+			<li>{{libro.id}}-
+				{{ libro.titulo }}
+			</li>
+		{% endfor %}
+	</ul>
+	<div data-controller="libros">
+		<div class="row">
+			<button id="btnLibros"  data-action="click->libros#cargarLibros" type="button" class="col-5 btn btn-secondary mx-2">
+				Cargar libros del servicio web
+			</button>
+			<button id="btnCrearLibro" data-action="click->libros#mostrarFormCrear" type="button" class=" col-5 btn btn-primary mx-2">
+				Crear nuevo libro
+			</button>
+		</div>
+		<div id="buzonMensajes" class="alert" style="display: none;" role="alert"></div>
+		<div id="divFormCrear" data-libros-target="formularioContenedor" style="display: none;" class="mt-4 p-3 border rounded bg-light">
+			<h3>
+				Nuevo Libro
+			</h3>
+			<div id="contenedorErrores" class="alert alert-danger" style="display: none;">
+				<ul id="listaErrores" class="mb-0"></ul>
+			</div>
+			<form id="formLibro" data-libros-target="formLibro" data-action="submit->libros#crearLibro">
+				<div class="mb-3">
+					<label for="titulo" class="form-label">
+						Título
+					</label>
+					<input type="text" id="titulo" data-libros-target="titulo" class="form-control" required>
+					<textarea id="descripcion" data-libros-target="descripcion" class="form-control mb-3" placeholder="Descripción del libro" rows="3"></textarea>
+					<button type="submit" class="btn btn-success">
+						Guardar en API
+					</button>
+					<button type="button" id="btnCancelar" class="btn btn-link">
+						Cancelar
+					</button>
+				</div>
+			</form>
+		</div>
+		<div id="divListaLibrosApi" data-libros-target="divListaLibrosApi" class="mt-4" style="display: none;">
+			<h2>
+				Listado de libros del API REST
+			</h2>
+			{# <ul id="listaLibrosApi"></ul> #}
+			<table class="table table-striped table-hover">
+				<thead class="table">
+					<tr>
+						<th>
+							ID
+						</th>
+						<th>
+							Título
+						</th>
+						<th>
+							Descripción
+						</th>
+						<th class="text-center">
+							Acciones
+						</th>
+					</tr>
+				</thead>
+				<tbody id="cuerpoTablaLibros" data-libros-target="cuerpoTablaLibros" data-action="click->libros#confirmarEliminarLibro"></tbody>
+			</table>
+		</div>
+	</div>
+
+{% endblock %}

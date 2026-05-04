@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block title %}Probando Stimulus
+{% endblock %}
+{% block body %}
+	<h2>Probando Stimulus</h2>
+	<div data-controller="hello">
+		<input type="text" data-hello-target="name">
+		<button data-action="click->hello#saludar">
+			Saludar
+		</button>
+	</div>
+{% endblock %}

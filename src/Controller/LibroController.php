@@ -31,10 +31,24 @@ final class LibroController extends AbstractController
 
         return $this->render("libro/busqueda.html.twig", ["libros" => $libros]);
     }
- #[Route('/libros', name: 'libro_index')]
+    #[Route('/libros', name: 'libro_index')]
     public function index(LibroRepository $libroRepository): Response
     {
         $libros = $libroRepository->findAll();
         return $this->render("libro/index.html.twig", ["libros" => $libros]);
+    }
+
+    #[Route('/hello', name: 'libro_hello')]
+    public function hello(): Response
+    {
+
+        return $this->render("libro/hello.html.twig");
+    }
+
+    #[Route('/libros/stimulus', name: 'libro_stimulus')]
+    public function crudLibrosStimulus(LibroRepository $libroRepository): Response
+    {
+        $libros = $libroRepository->findAll();
+        return $this->render("libro/stimulus.html.twig", ["libros" => $libros]);
     }
 }
