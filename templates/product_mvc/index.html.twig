@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Hello ProductMVCController!
+{% endblock %}
+
+{% block body %}
+
+<h1>Product MVC Controller</h1>
+    <section data-controller="product">
+        <button id="btnCrearProducto" data-action="click->product#mostrarFormCrear" type="button" class=" col-5 btn btn-primary mx-2">
+            Crear  producto
+        </button>
+
+        <div id="buzonMensajes" class="alert" style="display: none;" role="alert"></div>
+        <div id="divFormCrear" data-product-target="formularioContenedor" style="display: none;" class="mt-4 p-3 border rounded bg-light">
+            <h3>
+                Crear producto
+            </h3>
+            <div id="contenedorErrores" class="alert alert-danger" style="display: none;">
+                <ul id="listaErrores" class="mb-0"></ul>
+            </div>
+            <form id="formProducto" data-product-target="formProducto" data-action="submit->product#crearProducto">
+                <div class="mb-3">
+                    <label for="name" class="form-label">
+                        Nombre
+                    </label>
+                    <input type="text" id="name" data-product-target="name" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">
+                        Precio
+                    </label>
+                    <input type="number" min="0" step="0.01" id="price" data-product-target="price" class="form-control mb-3" placeholder="Precio del producto" required />
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-success">
+                        Guardar en API
+                    </button>
+                    <button type="button" id="btnCancelar" class="btn btn-link">
+                        Cancelar
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+        <div id="divListaProductosApi" data-product-target="divListaProductosApi" class="mt-4" style="display: none;">
+            <h2>
+                Listado de productos
+            </h2>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Precio
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpoTablaProductos" data-product-target="cuerpoTablaProductos"><!-- Aquí se insertarán los productos desde JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}
