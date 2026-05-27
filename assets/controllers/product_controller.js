@@ -73,10 +73,12 @@ export default class extends Controller {
 
         productos.forEach(producto => {
             const fila = document.createElement('tr');
+
+            
             fila.innerHTML = `
             <td>${producto.id}</td>
             <td><strong>${producto.name}</strong></td>
-            <td>${producto.price || '<span class="text-muted">Sin precio</span>'}</td>
+            <td>${(producto.price>=0 && producto.price!==null) ? producto.price :  '<span class="text-muted">Sin precio</span>'}</td>
           
         `;
             this.cuerpoTablaProductosTarget.appendChild(fila);
